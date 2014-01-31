@@ -102,7 +102,7 @@ public class CadastroItensListasBean {
 
         new ItensListasRepository(manager).adicionaItensListas(itensListas);
 
-        return "itens-lista?faces-redirect=true";
+        return "itens-lista?faces-redirect=true&idLista=" + itensListas.getListas().getIdLista();
     }
 
     private EntityManager getEntityManager() {
