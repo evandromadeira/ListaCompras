@@ -17,7 +17,7 @@
                     <h:inputText id="descricao" styleClass="form-control" value="#{cadastroListasBean.lista.descricaoLista}" label="Descrição"
                                  required="true" requiredMessage="Informe a descrição da lista" validatorMessage="Descrição não pode conter mais que 255 caracteres" pt:autofocus="true">
                         <f:validateLength maximum="255"/>
-                    </h:inputtext>
+                    </h:inputText>
                 </div>
                 <h:commandButton class="btn btn-primary" value="Gravar" action="#{cadastroListasBean.grava()}"/>
             </fieldset>
