@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="ListaComprasPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>model.Itens</class>
+        <class>model.Listas</class>
+        <class>model.ItensListas</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.6.156.130:3306/adminkKKixwZ"/>
+            <property name="javax.persistence.jdbc.password" value="DcEAetrAVKSd"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="adminkKKixwZ"/>
+        </properties>
+    </persistence-unit>
+</persistence>

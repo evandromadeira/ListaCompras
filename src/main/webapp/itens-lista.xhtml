@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<ui:composition template="_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Relação de Itens da Lista</ui:define>
+    <ui:define name="conteudo">
+        <h:form>
+            <h:inputHidden id="idLista" value="#{listaItensListasBean.idLista}"/>
+            <fieldset>
+                <h:dataTable styleClass="table table-condensed table-hover table-striped" value="#{listaItensListasBean.listaItensListas}" var="itensListas">
+                    <h:column>
+                        <f:facet name="header">Cód.</f:facet>
+                            #{itensListas.itens.idItem}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Descrição Item</f:facet>
+                            #{itensListas.itens.descricao}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Und.</f:facet>
+                            #{itensListas.itens.unid}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Qtd</f:facet>
+                        <h:outputText value="#{itensListas.qtd}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Valor Unit. R$</f:facet>
+                        <h:outputText value="#{itensListas.itens.valor}" class="align-direita">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Valor Tot. R$</f:facet>
+                        <h:outputText value="#{itensListas.itens.valor * itensListas.qtd}" class="align-direita">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Visível</f:facet>
+                        <h:outputText value="#{itensListas.visivel}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ações</f:facet>
+                        <h:link outcome="cadastro-itens-lista">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            <f:param name="idItemLista" value="#{itensListas.idItemLista}"/>
+                        </h:link>
+                    </h:column>
+                </h:dataTable>
+            </fieldset>
+        </h:form>
+    </ui:define>
+</ui:composition>

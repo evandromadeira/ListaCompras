@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<ui:composition template="_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Relação de Itens</ui:define>
+    <ui:define name="conteudo">
+        <h:form>
+            <fieldset>
+                <h:dataTable styleClass="table table-condensed table-hover table-striped" value="#{listaItensBean.listaItens}" var="relacItens">
+                    <h:column>
+                        <f:facet name="header">Cód.</f:facet>
+                            #{relacItens.idItem}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Descrição</f:facet>
+                            #{relacItens.descricao}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Und.</f:facet>
+                            #{relacItens.unid}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Valor R$</f:facet>
+                        <h:outputText value="#{relacItens.valor}" class="align-direita">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ações</f:facet>
+                        <h:link outcome="cadastro-itens">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            <f:param name="idItem" value="#{relacItens.idItem}"/>
+                        </h:link>
+                        <p:commandLink>
+                            <p:confirm message="Realmente deseja remover o item?" icon="ui-icon-alert"/>
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            <f:ajax listener="#{listaItensBean.removeItens(relacItens)}" render="@form"/>
+                        </p:commandLink>
+                        <p:commandLink>
+                            <p:confirmDialog header="Confirmação" global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                            </p:confirmDialog>
+                        </p:commandLink>
+                    </h:column>
+                </h:dataTable>
+            </fieldset>
+        </h:form>
+    </ui:define>
+</ui:composition>

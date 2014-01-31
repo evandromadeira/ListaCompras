@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<ui:composition template="_template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:define name="titulo">Cadastro de Itens na Lista</ui:define>
+    <ui:define name="conteudo">
+        <h:form>
+            <p:growl id="messages"/>
+            <h:inputHidden id="idItemLista" value="#{cadastroItensListasBean.itensListas.idItemLista}"/>
+            <h:inputHidden id="idLista" value="#{cadastroItensListasBean.itensListas.listas.idLista}"/>
+            <fieldset>
+                <legend>
+                    Lista: #{cadastroItensListasBean.itensListas.listas.descricaoLista}
+                </legend>
+                <div class="form-group">
+                    <h:outputLabel value="Código do Item" for="idItem"/>
+                    <h:inputText id="idItem" styleClass="form-control" value="#{cadastroItensListasBean.itensListas.itens.idItem}"
+                                 label="Código do Item" required="true" requiredMessage="Informe o código do item"/>
+                    <f:param name="idItem" value="#{cadastroItensListasBean.idItem}"/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Quantidade" for="qtd"/>
+                    <h:inputText id="qtd" styleClass="form-control" value="#{cadastroItensListasBean.itensListas.qtd}"
+                                 label="Quantidade" required="true" requiredMessage="Informe a quantidade do item"/>
+                </div>
+                <h:commandButton class="btn btn-primary" value="Gravar" action="#{cadastroItensListasBean.grava()}"/>
+            </fieldset>
+        </h:form>
+    </ui:define>
+</ui:composition>
