@@ -15,7 +15,9 @@
                 <div class="form-group">
                     <h:outputLabel value="Descrição" for="descricao"/>
                     <h:inputText id="descricao" styleClass="form-control" value="#{cadastroItensBean.itens.descricao}" label="Descrição"
-                                 required="true" requiredMessage="Informe a descrição do item" pt:autofocus="true"/>
+                                 required="true" requiredMessage="Informe a descrição do item" validatorMessage="Descrição não pode conter mais que 255 caracteres" pt:autofocus="true">
+                        <f:validateLength maximum="255"/>
+                    </h:inputtext>
                 </div>
                 <div class="form-group">
                     <h:outputLabel value="Valor R$" for="valor"/>
@@ -29,10 +31,10 @@
                         <f:validateLength maximum="2"/>
                     </h:inputText>
                 </div>
-<!--                <div class="form-group">
-                    <h:outputLabel value="Imagem" for="imagemItem"/>
-                    <h:inputFile id="imagemItem" value="#{cadastroItensBean.itens.imagemItem}" label="Imagem"/>
-                </div>-->
+                <!--                <div class="form-group">
+                                    <h:outputLabel value="Imagem" for="imagemItem"/>
+                                    <h:inputFile id="imagemItem" value="#{cadastroItensBean.itens.imagemItem}" label="Imagem"/>
+                                </div>-->
                 <h:commandButton class="btn btn-primary" value="Gravar" action="#{cadastroItensBean.grava()}"/>
             </fieldset>
         </h:form>
