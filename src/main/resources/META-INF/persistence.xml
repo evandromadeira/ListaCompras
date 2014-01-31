@@ -6,7 +6,7 @@
         <class>model.Listas</class>
         <class>model.ItensListas</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.6.156.130:3306/adminkKKixwZ"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.6.156.130:3306/listacompras"/>
             <property name="javax.persistence.jdbc.password" value="DcEAetrAVKSd"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.user" value="adminkKKixwZ"/>
