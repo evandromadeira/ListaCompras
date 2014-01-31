@@ -3,6 +3,7 @@ package jsf.filter;
 import java.io.IOException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -25,13 +26,14 @@ public class JpaFilter implements Filter {
         EntityManager manager = this.factory.createEntityManager();
 
         request.setAttribute("EntityManager", manager);
-        manager.getTransaction().begin();
+        EntityTransaction tx = manager.getTransaction();
+        tx.begin();
 
         try {
             chain.doFilter(request, response);
-            manager.getTransaction().commit();
+            tx.commit();
         } catch (Exception e) {
-            manager.getTransaction().rollback();
+            tx.rollback();
             throw new ServletException(e);
         } finally {
             manager.close();
