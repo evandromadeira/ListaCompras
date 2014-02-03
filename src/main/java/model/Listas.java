@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Listas implements Serializable {
@@ -15,6 +16,8 @@ public class Listas implements Serializable {
     private Long idLista;
     @Column(unique = true)
     private String descricaoLista;
+    @Transient
+    private String dataLista;
 
     public Long getIdLista() {
         return idLista;
@@ -30,6 +33,14 @@ public class Listas implements Serializable {
 
     public void setDescricaoLista(String descricaoLista) {
         this.descricaoLista = descricaoLista;
+    }
+
+    public String getDataLista() {
+        return dataLista;
+    }
+
+    public void setDataLista(String dataLista) {
+        this.dataLista = dataLista;
     }
 
     @Override

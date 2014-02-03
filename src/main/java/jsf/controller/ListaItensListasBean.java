@@ -2,7 +2,6 @@ package jsf.controller;
 
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
@@ -12,35 +11,20 @@ import model.ItensListasRepository;
 
 @ManagedBean
 public class ListaItensListasBean {
-    
-    @ManagedProperty("#{param.idLista}")
-    private Long idLista;
-    @ManagedProperty("#{param.idItemLista}")
-    private Long idItemLista;
 
-    public Long getIdLista() {
-        return idLista;
-    }
-
-    public void setIdLista(Long idLista) {
-        this.idLista = idLista;
-    }
-
-    public Long getIdItemLista() {
-        return idItemLista;
-    }
-
-    public void setIdItemLista(Long idItemLista) {
-        this.idItemLista = idItemLista;
-    }
-
-    public List<ItensListas> getListaItensListas() {
+    public List<ItensListas> getListaItensListas(Long idLista) {
         EntityManager entityManager = getEntityManager();
 
         return new ItensListasRepository(entityManager).consultaItensListas(idLista);
     }
 
-    public void remove(ItensListas itensListas) {
+    public void setItensListasInvisivel(ItensListas itensListas) {
+        EntityManager entityManager = getEntityManager();
+
+        new ItensListasRepository(entityManager).alteraItensListasOculto(itensListas);
+    }
+
+    public void removeItensListas(ItensListas itensListas) {
         EntityManager entityManager = getEntityManager();
 
         new ItensListasRepository(entityManager).removeItensListas(itensListas);

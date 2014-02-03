@@ -6,6 +6,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
+import model.Itens;
 import model.Listas;
 import model.ListasRepository;
 
@@ -18,10 +19,28 @@ public class ListaListasBean {
         return new ListasRepository(entityManager).consultaTodas();
     }
 
+    public List<Itens> getItensNaoListados(Long idLista) {
+        EntityManager entityManager = getEntityManager();
+
+        return new ListasRepository(entityManager).consultaItensNaoListados(idLista);
+    }
+
     public void removeListas(Listas listas) {
         EntityManager entityManager = getEntityManager();
 
         new ListasRepository(entityManager).removeLista(listas);
+    }
+
+    public Double getValorTotalLista(Long idLista) {
+        EntityManager entityManager = getEntityManager();
+
+        return new ListasRepository(entityManager).consultaValorTotalLista(idLista);
+    }
+
+    public Long getQuantidadeItensLista(Long idLista) {
+        EntityManager entityManager = getEntityManager();
+
+        return new ListasRepository(entityManager).consultaQuantidadeItensLista(idLista);
     }
 
     private EntityManager getEntityManager() {

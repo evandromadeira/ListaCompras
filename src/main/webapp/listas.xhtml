@@ -19,11 +19,17 @@
                             #{relacListas.descricaoLista}
                     </h:column>
                     <h:column>
+                        <f:facet name="header">Qtd. Itens</f:facet>
+                        <h:outputText value="#{listaListasBean.getQuantidadeItensLista(relacListas.idLista) + 0}" class="align-direita-lista"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Valor Lista R$</f:facet>
+                        <h:outputText value="#{listaListasBean.getValorTotalLista(relacListas.idLista) + 0}" class="align-direita-lista">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
                         <f:facet name="header">Opções</f:facet>
-                        <h:link outcome="cadastro-itens-lista">
-                            <span class="glyphicon glyphicon-plus-sign"></span>
-                            <f:param name="idLista" value="#{relacListas.idLista}"/>
-                        </h:link>
                         <h:link outcome="itens-lista">
                             <span class="glyphicon glyphicon-list"></span>
                             <f:param name="idLista" value="#{relacListas.idLista}"/>
@@ -33,19 +39,11 @@
                             <f:param name="idLista" value="#{relacListas.idLista}"/>
                         </h:link>
                         <p:commandLink>
-                            <p:confirm message="Realmente deseja remover a lista?" icon="ui-icon-alert"/>
                             <span class="glyphicon glyphicon-remove-sign"/>
                             <f:ajax listener="#{listaListasBean.removeListas(relacListas)}" render="@form"/>
                         </p:commandLink>
-                        <p:commandLink>
-                            <p:confirmDialog header="Confirmação" global="true" showEffect="fade" hideEffect="fade">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-                            </p:confirmDialog>
-                        </p:commandLink>
                     </h:column>
                 </h:dataTable>
-<!--                <h:inputHidden id="idLista" value="#{relacListas.idLista}"/>-->
             </fieldset>
         </h:form>
     </ui:define>

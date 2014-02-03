@@ -33,4 +33,9 @@ public class ItensListasRepository {
 
         return em.createQuery(sql, ItensListas.class).setParameter("idLista", idLista).getResultList();
     }
+
+    public void alteraItensListasOculto(ItensListas itensListas) {
+        itensListas = em.find(ItensListas.class, itensListas.getIdItemLista());
+        em.merge(itensListas).setVisivel("N");
+    }
 }

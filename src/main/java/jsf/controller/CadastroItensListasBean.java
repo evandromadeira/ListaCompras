@@ -2,7 +2,6 @@ package jsf.controller;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
@@ -10,21 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import model.Itens;
 import model.ItensListas;
 import model.ItensListasRepository;
-import model.ItensRepository;
 import model.Listas;
 import model.ListasRepository;
 
 @ManagedBean
-@ViewScoped
 public class CadastroItensListasBean {
 
+    private ItensListas itensListas = new ItensListas();
     private Itens itens = new Itens();
     private Listas listas = new Listas();
-    private ItensListas itensListas = new ItensListas();
 
-    private Long idItem;
-    private Long idLista;
-    private Long idItemLista;
+    public ItensListas getItensListas() {
+        return itensListas;
+    }
+
+    public void setItensListas(ItensListas itensListas) {
+        this.itensListas = itensListas;
+    }
 
     public Itens getItens() {
         return itens;
@@ -42,41 +43,6 @@ public class CadastroItensListasBean {
         this.listas = listas;
     }
 
-    public ItensListas getItensListas() {
-        return itensListas;
-    }
-
-    public void setItensListas(ItensListas itensListas) {
-        this.itensListas = itensListas;
-    }
-
-    public Long getIdItem() {
-        idItem = itensListas.getItens().getIdItem();
-        return idItem;
-    }
-
-    public void setIdItem(Long idItem) {
-        EntityManager manager = getEntityManager();
-        this.itens = new ItensRepository(manager).consultaItemPorId(idItem);
-        this.itensListas.setItens(itens);
-    }
-
-    public Long getIdLista() {
-        return idLista;
-    }
-
-    public void setIdLista(Long idLista) {
-        this.listas.setIdLista(idLista);
-    }
-
-    public Long getIdItemLista() {
-        return idItemLista;
-    }
-
-    public void setIdItemLista(Long idItemLista) {
-        this.idItemLista = idItemLista;
-    }
-
     @PostConstruct
     public void init() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -84,20 +50,33 @@ public class CadastroItensListasBean {
         String idLParam = facesContext.getExternalContext().getRequestParameterMap().get("idLista");
 
         if (idILParam != null) {
-            idItemLista = Long.valueOf(idILParam);
             EntityManager manager = getEntityManager();
-            this.itensListas = new ItensListasRepository(manager).consultaItensListasPorId(idItemLista);
+            this.itensListas = new ItensListasRepository(manager).consultaItensListasPorId(Long.valueOf(idILParam));
         } else {
             if (idLParam != null) {
-                idLista = Long.valueOf(idLParam);
                 EntityManager manager = getEntityManager();
-                this.listas = new ListasRepository(manager).consultaListaPorId(idLista);
-                this.itensListas.setListas(listas);
+                this.listas = new ListasRepository(manager).consultaListaPorId(Long.valueOf(idLParam));
             }
         }
     }
 
     public String grava() {
+        if (itens.getIdItem() != null) {
+            this.itensListas.setItens(itens);
+        } else {
+            throw new RuntimeException("O item não foi informado!");
+        }
+
+        if (listas.getIdLista() != null) {
+            this.itensListas.setListas(listas);
+        } else {
+            throw new RuntimeException("A lista não foi informado!");
+        }
+        
+        if (itensListas.getQtd() <= 0){
+            throw new RuntimeException("Quantidade inválida!");
+        }
+
         EntityManager manager = getEntityManager();
 
         new ItensListasRepository(manager).adicionaItensListas(itensListas);
