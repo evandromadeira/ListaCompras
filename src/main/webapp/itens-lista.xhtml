@@ -13,7 +13,7 @@
                 <legend>Lista: #{cadastroItensListasBean.listas.idLista} - #{cadastroItensListasBean.listas.descricaoLista}</legend>
 
                 <p:accordionPanel activeIndex="-1">
-                    <p:tab title="Adicionar Item " disabled="#{empty listaListasBean.getItensNaoListados(cadastroItensListasBean.listas.idLista)}">
+                    <p:tab title="Adicionar Item" disabled="#{empty listaListasBean.getItensNaoListados(cadastroItensListasBean.listas.idLista)}">
                         <h:panelGrid columns="5" >
                             <h:outputLabel value="Item"/>
                             <h:selectOneMenu value="#{cadastroItensListasBean.itens.idItem}" styleClass="form-control-descricao">
@@ -58,12 +58,16 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">Opções</f:facet>
-                        <p:commandLink>
-                            <span class="glyphicon glyphicon-ok-sign"/>
-                        </p:commandLink>
-                        <p:commandLink>
+                        <h:commandLink>
+                            <span class="glyphicon glyphicon-ok-sign" />
+                            <f:ajax listener="#{listaItensListasBean.setItensListasInvisivel(relacItensListas)}" render="@form"/>
+                            <f:param name="idLista" value="#{relacItensListas.listas.idLista}"/>
+                        </h:commandLink>
+                        <h:commandLink>
                             <span class="glyphicon glyphicon-remove-sign"/>
-                        </p:commandLink>
+                            <f:ajax listener="#{listaItensListasBean.removeItensListas(relacItensListas)}" render="@form"/>
+                            <f:param name="idLista" value="#{relacItensListas.listas.idLista}"/>
+                        </h:commandLink>
                     </h:column>
                 </h:dataTable>
                 <h:outputLabel class="form-control">Quantidade Itens:

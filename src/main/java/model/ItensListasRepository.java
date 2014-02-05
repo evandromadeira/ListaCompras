@@ -29,7 +29,7 @@ public class ItensListasRepository {
     }
 
     public List<ItensListas> consultaItensListas(Long idLista) {
-        String sql = "FROM ItensListas AS IL WHERE IL.listas.idLista = :idLista";
+        String sql = "FROM ItensListas AS IL WHERE IL.visivel <> 'N' AND IL.listas.idLista = :idLista";
 
         return em.createQuery(sql, ItensListas.class).setParameter("idLista", idLista).getResultList();
     }
