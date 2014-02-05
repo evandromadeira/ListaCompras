@@ -72,9 +72,13 @@ public class CadastroItensListasBean {
         } else {
             throw new RuntimeException("A lista não foi informado!");
         }
-        
-        if (itensListas.getQtd() <= 0){
+
+        if (itensListas.getQtd() <= 0) {
             throw new RuntimeException("Quantidade inválida!");
+        }
+
+        if (itensListas.getVisivel() == null) {
+            itensListas.setVisivel("S");
         }
 
         EntityManager manager = getEntityManager();
