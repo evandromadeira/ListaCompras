@@ -28,14 +28,14 @@ public class ItensListasRepository {
         return em.find(ItensListas.class, idItemLista);
     }
 
-    public List<ItensListas> consultaItensListas(Long idLista) {
-        String sql = "FROM ItensListas AS IL WHERE IL.visivel <> 'N' AND IL.listas.idLista = :idLista";
+    public List<ItensListas> consultaItensListas(Long idLista, String visivel) {
+        String sql = "FROM ItensListas AS IL WHERE IL.listas.idLista = " + String.valueOf(idLista) + " AND IL.visivel = '" + visivel + "'";
 
-        return em.createQuery(sql, ItensListas.class).setParameter("idLista", idLista).getResultList();
+        return em.createQuery(sql, ItensListas.class).getResultList();
     }
 
-    public void alteraItensListasOculto(ItensListas itensListas) {
+    public void alteraItensListasOculto(ItensListas itensListas, String visivel) {
         itensListas = em.find(ItensListas.class, itensListas.getIdItemLista());
-        em.merge(itensListas).setVisivel("N");
+        em.merge(itensListas).setVisivel(visivel);
     }
 }

@@ -7,11 +7,11 @@
 
     <ui:define name="titulo">Relação de Itens da Lista</ui:define>
     <ui:define name="conteudo">
-        <h:form>
+        <fieldset>
             <h:inputHidden id="idLista" value="#{cadastroItensListasBean.listas.idLista}"/>
-            <fieldset>
-                <legend>Lista: #{cadastroItensListasBean.listas.idLista} - #{cadastroItensListasBean.listas.descricaoLista}</legend>
+            <legend>Lista: #{cadastroItensListasBean.listas.idLista} - #{cadastroItensListasBean.listas.descricaoLista}</legend>
 
+            <h:form>
                 <p:accordionPanel activeIndex="-1">
                     <p:tab title="Adicionar Item" disabled="#{empty listaListasBean.getItensNaoListados(cadastroItensListasBean.listas.idLista)}">
                         <h:panelGrid columns="5" >
@@ -28,15 +28,13 @@
                         </h:panelGrid>
                     </p:tab>
                 </p:accordionPanel>
+            </h:form>
 
+            <h:form>
                 <h:dataTable styleClass="table table-condensed table-hover table-striped" value="#{listaItensListasBean.getListaItensListas(cadastroItensListasBean.listas.idLista)}" var="relacItensListas">
                     <h:column>
                         <f:facet name="header">Descrição Item</f:facet>
                             #{relacItensListas.itens.descricao}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Und.</f:facet>
-                            #{relacItensListas.itens.unid}
                     </h:column>
                     <h:column>
                         <f:facet name="header">Quantidade</f:facet>
@@ -45,13 +43,17 @@
                         </h:outputText>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Unid. (R$)</f:facet>
+                        <f:facet name="header">Und.</f:facet>
+                            #{relacItensListas.itens.unid}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Unit. R$</f:facet>
                         <h:outputText value="#{relacItensListas.itens.valor}" class="align-direita">
                             <f:convertNumber pattern="#,##0.00"/>
                         </h:outputText>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Total (R$)</f:facet>
+                        <f:facet name="header">Total R$</f:facet>
                         <h:outputText value="#{relacItensListas.itens.valor * relacItensListas.qtd}" class="align-direita">
                             <f:convertNumber pattern="#,##0.00"/>
                         </h:outputText>
@@ -70,6 +72,57 @@
                         </h:commandLink>
                     </h:column>
                 </h:dataTable>
+            </h:form>
+
+            <h:form>
+                <p:accordionPanel activeIndex="-1">
+                    <p:tab title="Itens Ocultos/Comprados" disabled="#{empty listaItensListasBean.getListaItensListasInvisiveis(cadastroItensListasBean.listas.idLista)}">
+                        <h:dataTable styleClass="table table-condensed table-hover table-striped" value="#{listaItensListasBean.getListaItensListasInvisiveis(cadastroItensListasBean.listas.idLista)}" var="relacItensListasInvisiveis">
+                            <h:column>
+                                <f:facet name="header">Descrição Item</f:facet>
+                                    #{relacItensListasInvisiveis.itens.descricao}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Quantidade</f:facet>
+                                <h:outputText value="#{relacItensListasInvisiveis.qtd}" class="align-direita">
+                                    <f:convertNumber pattern="#,##0.00"/>
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Und.</f:facet>
+                                    #{relacItensListasInvisiveis.itens.unid}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Unit. R$</f:facet>
+                                <h:outputText value="#{relacItensListasInvisiveis.itens.valor}" class="align-direita">
+                                    <f:convertNumber pattern="#,##0.00"/>
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Total R$</f:facet>
+                                <h:outputText value="#{relacItensListasInvisiveis.itens.valor * relacItensListasInvisiveis.qtd}" class="align-direita">
+                                    <f:convertNumber pattern="#,##0.00"/>
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Opções</f:facet>
+                                <h:commandLink>
+                                    <span class="glyphicon glyphicon-minus-sign" />
+                                    <f:ajax listener="#{listaItensListasBean.setItensListasVisivel(relacItensListasInvisiveis)}" render="@form"/>
+                                    <f:param name="idLista" value="#{relacItensListasInvisiveis.listas.idLista}"/>
+                                </h:commandLink>
+                                <h:commandLink>
+                                    <span class="glyphicon glyphicon-remove-sign"/>
+                                    <f:ajax listener="#{listaItensListasBean.removeItensListas(relacItensListasInvisiveis)}" render="@form"/>
+                                    <f:param name="idLista" value="#{relacItensListasInvisiveis.listas.idLista}"/>
+                                </h:commandLink>
+                            </h:column>
+                        </h:dataTable>
+                    </p:tab>
+                </p:accordionPanel>
+            </h:form>
+
+            <h:form>
                 <h:outputLabel class="form-control">Quantidade Itens:
                     <h:outputText value="#{listaListasBean.getQuantidadeItensLista(cadastroItensListasBean.listas.idLista) + 0}">
                         <f:convertNumber pattern="000"/>
@@ -78,7 +131,8 @@
                         <f:convertNumber pattern="#,##0.00"/>
                     </h:outputText>
                 </h:outputLabel>
-            </fieldset>
-        </h:form>
+            </h:form>
+
+        </fieldset>
     </ui:define>
 </ui:composition>

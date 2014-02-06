@@ -15,13 +15,25 @@ public class ListaItensListasBean {
     public List<ItensListas> getListaItensListas(Long idLista) {
         EntityManager entityManager = getEntityManager();
 
-        return new ItensListasRepository(entityManager).consultaItensListas(idLista);
+        return new ItensListasRepository(entityManager).consultaItensListas(idLista, "S");
+    }
+
+    public List<ItensListas> getListaItensListasInvisiveis(Long idLista) {
+        EntityManager entityManager = getEntityManager();
+
+        return new ItensListasRepository(entityManager).consultaItensListas(idLista, "N");
+    }
+
+    public void setItensListasVisivel(ItensListas itensListas) {
+        EntityManager entityManager = getEntityManager();
+
+        new ItensListasRepository(entityManager).alteraItensListasOculto(itensListas, "S");
     }
 
     public void setItensListasInvisivel(ItensListas itensListas) {
         EntityManager entityManager = getEntityManager();
 
-        new ItensListasRepository(entityManager).alteraItensListasOculto(itensListas);
+        new ItensListasRepository(entityManager).alteraItensListasOculto(itensListas, "N");
     }
 
     public void removeItensListas(ItensListas itensListas) {
